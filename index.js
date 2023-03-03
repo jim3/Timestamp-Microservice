@@ -10,34 +10,42 @@ app.get("/", function (req, res) {
     res.sendFile(__dirname + "/views/index.html");
 });
 
-// your first API endpoint...
 app.get("/api/hello", function (req, res) {
     res.json({ greeting: "hello API" });
 });
 
-// A request to `/api/:date?` with a valid date (a valid ISO-8601 date string) should return a JSON object
-// with a unix key that is a Unix timestamp of the input date in milliseconds (as type Number)
-app.get("/api/:date?", (req, res) => {
-    let dateStr = req.params.date;
-
+const timeConverter = (isoStr) => {
     // if no date is provided, use the current date
-    if (!dateStr) {
-        dateStr = new Date().toISOString();
+    if (!isoStr) {
+        isoStr = new Date().toISOString();
     }
-
-    // parse the date string
-    let date = new Date(dateStr);
-
-    // check if the date is valid
-    if (isNaN(date.getTime())) {
-        res.json({ error: "Invalid date" });
-    } else {
-        // convert the date to Unix timestamp format
-        let unixTime = date.getTime() / 1000;
-        res.json({
-            unix: unixTime,
-        });
+    // if the date is a number, convert it to a string
+    if (Number.isInteger(isoStr)) {
+        isoStr = new Date(isoStr).toISOString();
     }
+    // if the date is a string, convert it to a date object
+    if (typeof isoStr === "string") {
+        isoStr = new Date(isoStr);
+    }
+    // if the date is invalid, return an error
+    if (isoStr.toString() === "Invalid Date") {
+        res.json({ error: "Invalid Date" });
+    }
+    // return the unix timestamp and utc string
+    const unixTimeStamp = new Date(isoStr).getTime();
+    const utcTime = new Date(isoStr).toUTCString();
+    return { unix: unixTimeStamp, utc: utcTime };
+};
+
+app.get("/api/:date?", (req, res) => {
+    let isoStr = req.params.date;
+    const unixTimeStamp = timeConverter(isoStr);
+    const utcTime = timeConverter(isoStr);
+
+    res.json({
+        unix: unixTimeStamp,
+        utc: utcTime,
+    });
 });
 
 app.listen(port, () => {

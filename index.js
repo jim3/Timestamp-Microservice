@@ -34,7 +34,9 @@ app.get("/api/:date?", (req, res) => {
     } else {
         // convert the date to Unix timestamp format
         let unixTime = date.getTime() / 1000;
-        res.json({ unix: unixTime });
+        res.json({
+            unix: unixTime,
+        });
     }
 });
 

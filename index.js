@@ -1,3 +1,7 @@
+// ----------------------
+// Timestamp Microservice
+// ----------------------
+
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -43,8 +47,8 @@ app.get("/api/:date?", (req, res) => {
     const utcTime = timeConverter(isoStr);
 
     res.json({
-        unix: unixTimeStamp,
-        utc: utcTime,
+        unix: unixTimeStamp.unix,
+        utc: utcTime.utc,
     });
 });
 

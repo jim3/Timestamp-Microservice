@@ -1,0 +1,24 @@
+{
+  "name": "timestamp-microservice",
+  "version": "1.0.0",
+  "description": "---",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "set DEBUG=express:* & node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jim3/timestamp-microservice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jim3/timestamp-microservice/issues"
+  },
+  "homepage": "https://github.com/jim3/timestamp-microservice#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

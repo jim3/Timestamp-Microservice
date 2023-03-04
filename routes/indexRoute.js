@@ -3,10 +3,6 @@ const router = express.Router();
 const { timeConverter } = require("../services/timeConverter");
 
 router.get("/", function (req, res) {
-    res.sendFile(__dirname + "/views/index.html");
-});
-
-router.get("/", function (req, res) {
     res.render("index");
 });
 
